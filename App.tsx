@@ -1,32 +1,20 @@
-import {
-  ActivityIndicator,
-  Button,
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, View } from 'react-native';
 
 const App = () => {
   return (
     <View>
       <Text>hi 나는 죠니다 이녀석들아</Text>
-      {/* <Image
-        source={require('./image.png')}
-        style={{ width: '50%', height: '50%' }}
-      /> */}
-      <Image
-        source={{ uri: 'https://reactnative.dev/img/homepage/dissection.png' }}
-        style={{ width: '50%', height: '50%' }}
-      />
-      <Button title="button" />
-
-      {/* 터치할 수 있는 공간 */}
-      <TouchableOpacity onPress={() => console.log('touch!')}>
-        <Text>touchable</Text>
-      </TouchableOpacity>
-      {/* 로딩 상태*/}
-      <ActivityIndicator size={'large'} color={'orange'} />
+      <View
+        style={{
+          backgroundColor: '#e2e2e2',
+          padding: '5%',
+          margin: '5%',
+          borderRadius: 10,
+        }}
+      >
+        <Text style={{ fontSize: 22 }}>Title</Text>
+        <Text>This is a description</Text>
+      </View>
     </View>
   );
 };
