@@ -1,4 +1,11 @@
-import { Button, Image, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Button,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 const App = () => {
   return (
@@ -18,6 +25,8 @@ const App = () => {
       <TouchableOpacity onPress={() => console.log('touch!')}>
         <Text>touchable</Text>
       </TouchableOpacity>
+      {/* 로딩 상태*/}
+      <ActivityIndicator size={'large'} color={'orange'} />
     </View>
   );
 };
