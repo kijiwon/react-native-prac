@@ -12,7 +12,12 @@ export default function HomeScreen() {
         <Text style={styles.cityName}>Suwon</Text>
       </View>
       {/* ScrollView의 경우 contentContainerStyle을 적용 */}
-      <ScrollView contentContainerStyle={styles.weather} horizontal>
+      <ScrollView
+        contentContainerStyle={styles.weather}
+        horizontal // 가로 스크롤
+        pagingEnabled // 페이지 넘어가기
+        showsHorizontalScrollIndicator={false} // 페이징 스크롤
+      >
         <View style={styles.day}>
           <Text style={styles.temp}>30</Text>
           <Text style={styles.description}>Rain</Text>
