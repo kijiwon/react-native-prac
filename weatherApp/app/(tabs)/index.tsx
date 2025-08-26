@@ -85,9 +85,7 @@ export default function HomeScreen() {
                 {parseFloat(day.main.temp).toFixed(1)}
               </Text>
               <Text style={styles.description}>{day.weather[0].main}</Text>
-              <Text style={styles.description}>
-                {day.weather[0].description}
-              </Text>
+              <Text style={styles.tinyText}>{day.weather[0].description}</Text>
             </View>
           ))
         )}
@@ -127,5 +125,8 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 50,
     marginTop: -20,
+  },
+  tinyText: {
+    fontSize: 20,
   },
 });
