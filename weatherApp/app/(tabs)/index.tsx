@@ -1,15 +1,47 @@
+import * as Location from "expo-location";
 import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 
 // 기기별 너비 가져오기
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export default function HomeScreen() {
+  const [city, setCity] = useState("Loading...");
+  const [ok, setOk] = useState(true);
+
+  const ask = async () => {
+    let { granted } = await Location.requestForegroundPermissionsAsync(); // 앱 사용 중에만 위치 사용
+    if (!granted) {
+      // 권한x
+      setOk(false);
+    }
+    if (ok) {
+      // 현재 위치
+      const {
+        coords: { latitude, longitude },
+      } = await Location.getCurrentPositionAsync({
+        // 정확성
+        accuracy: 5,
+      });
+
+      // 지역으로 표시
+      const location = await Location.reverseGeocodeAsync({
+        latitude,
+        longitude,
+      });
+      setCity(location[0].city!);
+    }
+  };
+  useEffect(() => {
+    ask();
+  }, []);
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.city}>
-        <Text style={styles.cityName}>Suwon</Text>
+        <Text style={styles.cityName}>{city}</Text>
       </View>
       {/* ScrollView의 경우 contentContainerStyle을 적용 */}
       <ScrollView
