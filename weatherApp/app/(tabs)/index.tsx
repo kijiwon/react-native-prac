@@ -1,7 +1,14 @@
 import * as Location from "expo-location";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 // 기기별 너비 가져오기
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -41,7 +48,7 @@ export default function HomeScreen() {
       const filteredList = list.filter(
         ({ dt_txt }: { dt_txt: string }) => dt_txt.endsWith("00:00:00") // 오전 9시
       );
-      console.log("filteredList>>>>", filteredList);
+      // setDays(filteredList);
     }
   };
   useEffect(() => {
@@ -61,26 +68,20 @@ export default function HomeScreen() {
         pagingEnabled // 페이지 넘어가기
         showsHorizontalScrollIndicator={false} // 페이징 스크롤
       >
-        <View style={styles.day}>
-          <Text style={styles.temp}>30</Text>
-          <Text style={styles.description}>Rain</Text>
-        </View>
-        <View style={styles.day}>
-          <Text style={styles.temp}>30</Text>
-          <Text style={styles.description}>Rain</Text>
-        </View>
-        <View style={styles.day}>
-          <Text style={styles.temp}>30</Text>
-          <Text style={styles.description}>Rain</Text>
-        </View>
-        <View style={styles.day}>
-          <Text style={styles.temp}>30</Text>
-          <Text style={styles.description}>Rain</Text>
-        </View>
-        <View style={styles.day}>
-          <Text style={styles.temp}>30</Text>
-          <Text style={styles.description}>Rain</Text>
-        </View>
+        {days.length === 0 ? (
+          <View style={styles.day}>
+            <ActivityIndicator
+              color={"white"}
+              size={"large"}
+              style={{ marginTop: 10 }}
+            />
+          </View>
+        ) : (
+          <View style={styles.day}>
+            {/* <Text style={styles.temp}>30</Text>
+            <Text style={styles.description}>Rain</Text> */}
+          </View>
+        )}
       </ScrollView>
     </View>
   );
