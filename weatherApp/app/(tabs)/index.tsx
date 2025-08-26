@@ -19,7 +19,7 @@ export default function HomeScreen() {
   const [ok, setOk] = useState(true);
   const [days, setDays] = useState([]);
 
-  const ask = async () => {
+  const getWeather = async () => {
     let { granted } = await Location.requestForegroundPermissionsAsync(); // 앱 사용 중에만 위치 사용
     if (!granted) {
       // 권한x
@@ -53,7 +53,7 @@ export default function HomeScreen() {
     }
   };
   useEffect(() => {
-    ask();
+    getWeather();
   }, []);
 
   return (
@@ -110,8 +110,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   weather: {
-    flex: 3,
-    // backgroundColor: "blue",
+    // flex: 3,
   },
   day: {
     width: SCREEN_WIDTH,
