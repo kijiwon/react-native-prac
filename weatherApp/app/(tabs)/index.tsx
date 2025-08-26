@@ -5,18 +5,19 @@ import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 
 // 기기별 너비 가져오기
 const SCREEN_WIDTH = Dimensions.get("window").width;
+const API_KEY = process.env.EXPO_PUBLIC_WEATHER_API;
 
 export default function HomeScreen() {
   const [city, setCity] = useState("Loading...");
   const [ok, setOk] = useState(true);
+  const [days, setDays] = useState([]);
 
   const ask = async () => {
     let { granted } = await Location.requestForegroundPermissionsAsync(); // 앱 사용 중에만 위치 사용
     if (!granted) {
       // 권한x
       setOk(false);
-    }
-    if (ok) {
+    } else {
       // 현재 위치
       const {
         coords: { latitude, longitude },
@@ -30,7 +31,17 @@ export default function HomeScreen() {
         latitude,
         longitude,
       });
-      setCity(location[0].city!);
+      setCity(location[0].city as string);
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
+      );
+
+      const json = await response.json();
+      const list = await json.list;
+      const filteredList = list.filter(
+        ({ dt_txt }: { dt_txt: string }) => dt_txt.endsWith("00:00:00") // 오전 9시
+      );
+      console.log("filteredList>>>>", filteredList);
     }
   };
   useEffect(() => {
