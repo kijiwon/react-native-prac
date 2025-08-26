@@ -40,7 +40,7 @@ export default function HomeScreen() {
       });
       setCity(location[0].city as string);
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
       );
 
       const json = await response.json();
@@ -48,7 +48,8 @@ export default function HomeScreen() {
       const filteredList = list.filter(
         ({ dt_txt }: { dt_txt: string }) => dt_txt.endsWith("00:00:00") // 오전 9시
       );
-      // setDays(filteredList);
+      setDays(filteredList);
+      // console.log(days);
     }
   };
   useEffect(() => {
@@ -77,10 +78,18 @@ export default function HomeScreen() {
             />
           </View>
         ) : (
-          <View style={styles.day}>
-            {/* <Text style={styles.temp}>30</Text>
-            <Text style={styles.description}>Rain</Text> */}
-          </View>
+          days.map((day, idx) => (
+            <View style={styles.day} key={idx}>
+              <Text style={styles.temp}>
+                {/* 소수점 한 자리까지만 표시 */}
+                {parseFloat(day.main.temp).toFixed(1)}
+              </Text>
+              <Text style={styles.description}>{day.weather[0].main}</Text>
+              <Text style={styles.description}>
+                {day.weather[0].description}
+              </Text>
+            </View>
+          ))
         )}
       </ScrollView>
     </View>
